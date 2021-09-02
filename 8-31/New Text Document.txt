@@ -1,0 +1,56 @@
+var twoSum = function (nums, target) {
+  let count = 0;
+  let buffer_1 = [], buffer_2 = [];
+  let flag = true;
+  let result = [], ok = [];
+
+  while (flag) {
+    for (let i = 0; i < nums.length - 1; i++) {
+      for (let j = 0; j < nums.length; j++) {
+        if (buffer_1[j] != undefined) {
+          let test = [];
+          buffer_1.map((data1) => {
+            test = [];
+            data1.map((data2) => {
+              test.push(data2)
+              return true;
+            })
+            buffer_2.push([...test, j]);
+            return true;
+          })
+        }
+        else {
+          buffer_2.push([j]);
+        }
+      }
+      buffer_2.sort();
+
+      let first, sam_find = true;
+      count = 0;
+
+      buffer_2.map((data1, i) => {
+        sam_find = true;
+        data1.sort();
+        data1.map(data => {
+          first !== data ? first = data : sam_find = false;
+          count += nums[data];
+          result.push(data)
+          return true;
+        });
+        if (sam_find && target === count) {
+          result.sort((a, b) => a - b)
+          ok = result;
+          flag = false;
+        }
+        result = [];
+        count = 0;
+        return true;
+      })
+
+      buffer_1 = buffer_2;
+      buffer_2 = [];
+    }
+  }
+
+  return ok;
+};
